@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piper's Drain Repair — SEO & GBP Performance Report | Jan–Apr 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #1A5C3A; --primary-light: #2E7D52; --accent: #F5A623;
+    --accent2: #27AE60; --bg: #F0F5F2; --card: #FFFFFF; --text: #1A2B23;
+    --muted: #6B7A6E; --border: #C8DDD1; --green: #27AE60; --orange: #E67E22; --red: #C0392B;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:14px; }
+  .report-header { background:linear-gradient(135deg,#1A5C3A 0%,#2E7D52 60%,#F5A623 100%); color:white; padding:40px 48px 32px; position:relative; overflow:hidden; }
+  .report-header::before { content:""; position:absolute; top:-40px; right:-40px; width:300px; height:300px; border-radius:50%; background:rgba(255,255,255,0.06); }
+  .header-badge { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; opacity:0.8; margin-bottom:10px; }
+  .header-title { font-size:32px; font-weight:800; line-height:1.2; margin-bottom:6px; }
+  .header-sub { font-size:16px; opacity:0.85; margin-bottom:20px; }
+  .header-meta { display:flex; gap:24px; flex-wrap:wrap; }
+  .header-meta span { font-size:12px; opacity:0.75; }
+  .tab-nav { background:var(--primary); padding:0 24px; display:flex; gap:2px; flex-wrap:wrap; overflow-x:auto; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,0.25); }
+  .tab-btn { background:transparent; border:none; color:rgba(255,255,255,0.65); padding:14px 16px; cursor:pointer; font-size:12.5px; font-weight:600; white-space:nowrap; border-bottom:3px solid transparent; transition:all 0.2s; }
+  .tab-btn:hover { color:white; background:rgba(255,255,255,0.08); }
+  .tab-btn.active { color:white; border-bottom-color:var(--accent); background:rgba(255,255,255,0.1); }
+  .tab-pane { display:none; padding:28px 32px; max-width:1400px; margin:0 auto; }
+  .tab-pane.active { display:block; }
+  .section-title { font-size:20px; font-weight:700; color:var(--primary); margin-bottom:6px; border-left:4px solid var(--accent); padding-left:12px; }
+  .section-sub { color:var(--muted); font-size:13px; margin-bottom:20px; padding-left:16px; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:14px; margin-bottom:28px; }
+  .kpi-card { background:var(--card); border-radius:10px; padding:18px 16px; border-top:4px solid var(--primary); box-shadow:0 2px 8px rgba(0,0,0,0.07); }
+  .kpi-card.green { border-top-color:var(--green); }
+  .kpi-card.orange { border-top-color:var(--orange); }
+  .kpi-card.red { border-top-color:var(--red); }
+  .kpi-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted); margin-bottom:6px; }
+  .kpi-value { font-size:28px; font-weight:800; color:var(--text); line-height:1; }
+  .kpi-delta { font-size:11px; margin-top:4px; }
+  .kpi-delta.up { color:var(--green); } .kpi-delta.down { color:var(--red); } .kpi-delta.neutral { color:var(--muted); }
+  .card { background:var(--card); border-radius:10px; padding:20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.07); }
+  .card-title { font-size:14px; font-weight:700; color:var(--primary); margin-bottom:14px; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .chart-wrap { position:relative; height:260px; }
+  .tbl-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:var(--primary); color:white; padding:10px 12px; text-align:left; font-size:11.5px; font-weight:600; white-space:nowrap; }
+  tbody tr:nth-child(even) { background:#F4FAF6; }
+  tbody tr:hover { background:#E8F5EE; }
+  td { padding:9px 12px; border-bottom:1px solid var(--border); }
+  .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; }
+  .badge-green { background:#D4EFDF; color:#1E7E4A; } .badge-orange { background:#FDEBD0; color:#D35400; }
+  .badge-red { background:#FADBD8; color:#A93226; } .badge-blue { background:#D6EAF8; color:#1A5276; }
+  .badge-gray { background:#EAECEE; color:#5D6D7E; }
+  .ctr-good { color:var(--green); font-weight:700; } .ctr-warn { color:var(--orange); font-weight:700; } .ctr-bad { color:var(--red); font-weight:700; }
+  .rank-good { color:var(--green); font-weight:700; } .rank-warn { color:var(--orange); font-weight:700; } .rank-bad { color:var(--red); font-weight:700; }
+  .checklist-pass { color:var(--green); font-weight:700; } .checklist-warn { color:var(--orange); font-weight:700; } .checklist-fail { color:var(--red); font-weight:700; }
+  .insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:20px; }
+  .insight-box { background:var(--card); border-radius:10px; padding:16px 18px; border-left:5px solid var(--primary); box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+  .insight-box.green { border-left-color:var(--green); } .insight-box.orange { border-left-color:var(--orange); } .insight-box.red { border-left-color:var(--red); } .insight-box.blue { border-left-color:#2980B9; }
+  .insight-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px; }
+  .insight-box.green .insight-title { color:var(--green); } .insight-box.orange .insight-title { color:var(--orange); } .insight-box.red .insight-title { color:var(--red); } .insight-box.blue .insight-title { color:#2980B9; }
+  .insight-box p { font-size:13px; line-height:1.55; }
+  .eeat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+  .eeat-card { background:var(--card); border-radius:10px; padding:20px 16px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.07); }
+  .eeat-letter { font-size:13px; font-weight:700; color:var(--muted); margin-bottom:4px; }
+  .eeat-grade { font-size:42px; font-weight:900; line-height:1; margin:8px 0; }
+  .grade-a { color:var(--green); } .grade-b { color:#2980B9; } .grade-c { color:var(--orange); } .grade-d { color:var(--red); }
+  .eeat-note { font-size:11px; color:var(--muted); line-height:1.4; }
+  .action-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  .action-box { background:var(--card); border-radius:10px; padding:16px 18px; box-shadow:0 2px 6px rgba(0,0,0,0.06); border-top:3px solid var(--accent); }
+  .action-box .priority { font-size:10px; font-weight:700; text-transform:uppercase; color:var(--muted); margin-bottom:4px; }
+  .action-box h4 { font-size:13.5px; font-weight:700; color:var(--primary); margin-bottom:6px; }
+  .action-box p { font-size:12.5px; line-height:1.5; }
+  .filter-btn { background:#EBF5EF; border:1px solid var(--border); padding:7px 14px; border-radius:20px; cursor:pointer; font-size:12.5px; font-weight:600; transition:all 0.15s; }
+  .filter-btn.active, .filter-btn:hover { background:var(--primary); color:white; border-color:var(--primary); }
+  @media(max-width:768px) { .tab-pane { padding:16px; } .two-col,.eeat-grid { grid-template-columns:1fr; } .header-title { font-size:22px; } }
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="header-badge">SEO &amp; GBP Performance Report</div>
+  <div class="header-title">Piper&#39;s Drain Repair LLC</div>
+  <div class="header-sub">Kent, WA &amp; Maple Valley, WA | January – April 2026</div>
+  <div class="header-meta">
+    <span><strong>Website:</strong> pipersdrainrepair.com</span>
+    <span><strong>Service Areas:</strong> Kent · Maple Valley · Bellevue · Ballard · Fremont · Greenwood · Magnolia</span>
+    <span><strong>Report Period:</strong> Jan 1 – Apr 30, 2026</span>
+    <span><strong>Prepared:</strong> June 2026</span>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="tab-summary">📋 Executive Summary</button>
+  <button class="tab-btn" data-tab="tab-gbp">📍 GBP Performance</button>
+  <button class="tab-btn" data-tab="tab-gsc">🔎 Search Console</button>
+  <button class="tab-btn" data-tab="tab-coreupdate">🛡 Core Update Audit</button>
+  <button class="tab-btn" data-tab="tab-ga4">📊 GA4 Analytics</button>
+  <button class="tab-btn" data-tab="tab-content">📝 Content Audit</button>
+  <button class="tab-btn" data-tab="tab-calendar">📅 Content Calendar</button>
+  <button class="tab-btn" data-tab="tab-local">📌 Local SEO</button>
+  <button class="tab-btn" data-tab="tab-actions">🚀 Priority Actions</button>
+</nav>
+
+<!-- EXECUTIVE SUMMARY -->
+<div id="tab-summary" class="tab-pane active">
+  <div class="section-title">Executive Summary</div>
+  <div class="section-sub">Jan – Apr 2026 · Piper&#39;s Drain Repair LLC · Kent &amp; Maple Valley, WA</div>
+  <div class="kpi-grid">
+    <div class="kpi-card green"><div class="kpi-label">Organic Clicks (GSC)</div><div class="kpi-value">135</div><div class="kpi-delta up">↑ Growing (28 → 45 → 32)</div></div>
+    <div class="kpi-card"><div class="kpi-label">GSC Impressions</div><div class="kpi-value">73K</div><div class="kpi-delta up">↑ 8K → 28K (250% growth)</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Avg. Position</div><div class="kpi-value">34.3</div><div class="kpi-delta down">↓ Page 4 avg</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Phone Calls (GA4)</div><div class="kpi-value">35</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Form Submits</div><div class="kpi-value">9</div><div class="kpi-delta neutral">+ 7 thank-you views</div></div>
+    <div class="kpi-card"><div class="kpi-label">GA4 Sessions</div><div class="kpi-value">805</div><div class="kpi-delta neutral">578 users</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Engagement Rate</div><div class="kpi-value">17.4%</div><div class="kpi-delta down">↓ Critical — avg 60%+</div></div>
+    <div class="kpi-card green"><div class="kpi-label">GBP Calls</div><div class="kpi-value">19</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-box green">
+      <div class="insight-title">📈 Site Growing Fast — Impressions Up 250%</div>
+      <p>The site launched recently and GSC impressions grew from <strong>8,007 in January to 28,023 in April</strong> — a 250% increase in 4 months. This trajectory shows Google is discovering and indexing content, but ranking positions (avg 34.3) need improvement to convert impressions into clicks.</p>
+    </div>
+    <div class="insight-box red">
+      <div class="insight-title">🚨 17.4% Engagement Rate — Critical Issue</div>
+      <p>Industry average is 60%+. At <strong>17.4% engagement with 82.6% bounce rate</strong>, visitors are landing and immediately leaving. The April drop to 16.5% despite 394 sessions (the highest month) confirms a paid traffic quality issue — ads are driving irrelevant visitors or the landing pages don't match ad intent.</p>
+    </div>
+    <div class="insight-box red">
+      <div class="insight-title">🚨 Maple Valley Rankings Collapsed in April</div>
+      <p><strong>"Plumber" in Maple Valley dropped from position 11 to 65</strong> in April 2026 — a 54-position free-fall. Multiple other keywords also dropped significantly. This coincides with a possible Google local update or a competitor surge. Immediate GBP optimization for Maple Valley is needed.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ 7,558 Impressions — 1 Click (Sump Pump Page)</div>
+      <p>The sump pump repair page ranks at <strong>position 42.1 with 7,558 impressions</strong> and only 1 click. Moving this single page from page 4 to page 1 could add 100–200 monthly clicks. It needs a complete content rewrite with cost guide, FAQ schema, and Seattle-area context.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 Grease Trap — Closest to Page 1</div>
+      <p>The grease trap cleaning page ranks at <strong>position 19.5 with 3,550 impressions</strong> — just below page 2. With a content expansion and FAQ schema, this page could break into the top 10 within 60 days. Commercial clients (restaurants) are high-value customers.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 Ballard WA — Near Page 1</div>
+      <p>The <strong>/areas-we-serve/ballard-wa/ page ranks at position 12.2</strong> with 989 impressions but zero clicks. A title tag optimization and content expansion could push this onto page 1 for "plumber Ballard WA" — a premium Seattle neighborhood market.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🚦 Top 5 Priority Actions</div>
+    <table><thead><tr><th>#</th><th>Action</th><th>Impact</th><th>Effort</th><th>Timeline</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>Fix 17.4% engagement rate — audit paid search landing pages, add CTAs, improve page relevance</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-green">Low</span></td><td>This week</td></tr>
+      <tr><td><strong>2</strong></td><td>Rewrite sump pump repair page (7,558 impr, pos 42.1) — cost guide, FAQ schema, Seattle context</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>Week 1–2</td></tr>
+      <tr><td><strong>3</strong></td><td>Emergency GBP optimization for Maple Valley — "Plumber" dropped from pos 11 to 65</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-green">Low</span></td><td>This week</td></tr>
+      <tr><td><strong>4</strong></td><td>Optimize grease trap cleaning page (3,550 impr, pos 19.5) — FAQ schema + commercial angle</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>Week 1</td></tr>
+      <tr><td><strong>5</strong></td><td>Title tag fix + content expansion for Ballard WA page (pos 12.2, 0 clicks)</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>Week 1</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<!-- GBP PERFORMANCE -->
+<div id="tab-gbp" class="tab-pane">
+  <div class="section-title">GBP Performance</div>
+  <div class="section-sub">Google Business Profile · Kent, WA &amp; Maple Valley, WA · Jan–Apr 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">GBP Website Clicks</div><div class="kpi-value">101</div><div class="kpi-delta neutral">Jan–Apr 2026 total</div></div>
+    <div class="kpi-card green"><div class="kpi-label">GBP Calls</div><div class="kpi-value">19</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Profile Views</div><div class="kpi-value">1,356</div><div class="kpi-delta up">↑ Apr spike: 639</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">GBP Impressions</div><div class="kpi-value">143</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+    <div class="kpi-card green"><div class="kpi-label">CallRail Calls (Feb)</div><div class="kpi-value">49</div><div class="kpi-delta neutral">45 answered (91.8%)</div></div>
+    <div class="kpi-card green"><div class="kpi-label">CallRail Calls (Mar)</div><div class="kpi-value">30</div><div class="kpi-delta neutral">28 answered (93.3%)</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📅 GBP Monthly Performance</div>
+      <div class="chart-wrap"><canvas id="gbpPerfChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📞 CallRail Call Tracking</div>
+      <table><thead><tr><th>Month</th><th>Total Calls</th><th>Answered</th><th>Missed</th><th>Answer Rate</th></tr></thead>
+      <tbody>
+        <tr><td>Feb 2026</td><td>49</td><td>45</td><td>4</td><td class="ctr-good">91.8%</td></tr>
+        <tr><td>Mar 2026</td><td>30</td><td>28</td><td>2</td><td class="ctr-good">93.3%</td></tr>
+        <tr><td colspan="5" style="color:var(--muted);font-size:12px;font-style:italic">Jan &amp; Apr 2026 data pending — verify CallRail tracking is active</td></tr>
+      </tbody></table>
+      <div class="insight-box green" style="margin-top:14px">
+        <div class="insight-title">✅ Strong Call Answer Rate</div>
+        <p>91.8%–93.3% call answer rate is excellent. With 49 calls in February alone, focus on growing top-of-funnel traffic to scale this conversion engine. Apply for LSA (Google Guaranteed) badge to add more call volume.</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📋 Monthly GBP Performance Data</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Website Clicks</th><th>Calls</th><th>Visit Profile</th><th>Impressions</th><th>Directions</th></tr></thead>
+      <tbody>
+        <tr><td>Sep 2025</td><td>38</td><td>11</td><td>316</td><td>58</td><td>—</td></tr>
+        <tr><td>Oct 2025</td><td>26</td><td>6</td><td>415</td><td>42</td><td>—</td></tr>
+        <tr><td>Nov 2025</td><td>20</td><td>3</td><td>270</td><td>69</td><td>—</td></tr>
+        <tr><td>Dec 2025</td><td>14</td><td>3</td><td>257</td><td>45</td><td>0</td></tr>
+        <tr><td><strong>Jan 2026</strong></td><td><strong>23</strong></td><td><strong>3</strong></td><td><strong>258</strong></td><td><strong>38</strong></td><td><strong>0</strong></td></tr>
+        <tr><td><strong>Feb 2026</strong></td><td><strong>19</strong></td><td><strong>3</strong></td><td><strong>192</strong></td><td><strong>29</strong></td><td><strong>0</strong></td></tr>
+        <tr><td><strong>Mar 2026</strong></td><td><strong>34</strong></td><td><strong>5</strong></td><td><strong>267</strong></td><td><strong>29</strong></td><td><strong>0</strong></td></tr>
+        <tr><td><strong>Apr 2026</strong></td><td><strong>25</strong></td><td><strong>8</strong></td><td><strong>639</strong></td><td><strong>47</strong></td><td><strong>23</strong></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📍 Map Pack Rankings — Kent, WA (April 2026)</div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Tracking started April 2026</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Keyword</th><th>Apr 2026</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Plumber</td><td class="rank-bad">20</td><td>Needs improvement</td></tr>
+          <tr><td>Sewer Camera Inspection</td><td class="rank-good">5</td><td class="rank-good">Top 5 ✓</td></tr>
+          <tr><td>Hydro Jetting</td><td class="rank-good">3</td><td class="rank-good">Strong #3 ✓</td></tr>
+          <tr><td>Sump Pump Repair</td><td class="rank-good">3</td><td class="rank-good">Strong #3 ✓</td></tr>
+          <tr><td>Sump Pump Replacement</td><td class="rank-good">5</td><td class="rank-good">Top 5 ✓</td></tr>
+          <tr><td>Water Line Repair</td><td class="rank-good">5</td><td class="rank-good">Top 5 ✓</td></tr>
+          <tr><td>Sewer Repair</td><td class="rank-2">2</td><td class="rank-good">Excellent #2</td></tr>
+          <tr><td>Sewer Replacement</td><td class="rank-good">3</td><td class="rank-good">Strong #3 ✓</td></tr>
+          <tr><td>Trenchless Sewer Lining</td><td class="rank-1" style="color:#27AE60;font-weight:900">1</td><td class="rank-good">🏆 #1!</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📍 Map Pack Rankings — Maple Valley, WA (Oct 2025–Apr 2026)</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Keyword</th><th>Oct</th><th>Jan</th><th>Mar</th><th>Apr</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td>Plumber</td><td>7</td><td>15</td><td>11</td><td class="rank-bad">65</td><td class="rank-bad">🔴 CRASHED</td></tr>
+          <tr><td>Sewer Camera</td><td>15</td><td>9</td><td>5</td><td class="rank-warn">17</td><td class="rank-bad">↓ Dropped</td></tr>
+          <tr><td>Hydro Jetting</td><td>1</td><td>4</td><td>3</td><td class="rank-good">7</td><td>Volatile</td></tr>
+          <tr><td>Sump Pump Repair</td><td>4</td><td>4</td><td>4</td><td class="rank-bad">21</td><td class="rank-bad">↓ Dropped</td></tr>
+          <tr><td>Sump Pump Replace</td><td>4</td><td>9</td><td>11</td><td class="rank-bad">22</td><td class="rank-bad">↓ Dropped</td></tr>
+          <tr><td>Water Line Repair</td><td>5</td><td>7</td><td>6</td><td class="rank-warn">13</td><td class="rank-bad">↓ Dropped</td></tr>
+          <tr><td>Sewer Repair</td><td>3</td><td>5</td><td>5</td><td class="rank-bad">15</td><td class="rank-bad">↓ Dropped</td></tr>
+          <tr><td>Sewer Replacement</td><td>1</td><td>5</td><td>5</td><td class="rank-good">5</td><td>Stable</td></tr>
+          <tr><td>Trenchless Lining</td><td>7</td><td>2</td><td>2</td><td class="rank-bad">14</td><td class="rank-bad">↓ Dropped</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-box red">
+      <div class="insight-title">🚨 Maple Valley April 2026 Ranking Collapse</div>
+      <p>"Plumber" dropped from position 11 to <strong>65 in a single month</strong>. 7 out of 9 keywords dropped simultaneously in Maple Valley. This pattern suggests a <strong>competitor surged their GBP signals</strong> (review velocity, posts, Q&amp;A) or Google re-ranked the local pack. Respond with: 5+ new reviews in Maple Valley, weekly GBP posts, and Q&amp;A answers targeting Maple Valley keywords.</p>
+    </div>
+    <div class="insight-box green">
+      <div class="insight-title">🏆 Kent, WA — Dominant in Specialty Services</div>
+      <p>Kent map pack shows <strong>#1 for Trenchless Sewer Lining, #2 Sewer Repair, #3 Hydro Jetting and Sump Pump Repair</strong>. These are high-value specialty services. Protect these rankings with fresh GBP photos, service posts, and Q&amp;A entries targeting these exact keywords.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ Zero Directions in Jan–Mar 2026</div>
+      <p>GBP direction requests were <strong>0 for January, February, and March 2026</strong> — then jumped to 23 in April. This suggests the GBP listing may have had incorrect or missing address/service area data that was corrected in April. Verify all GBP information is complete and accurate.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ April Profile View Spike: 639 vs 192–267 Normal</div>
+      <p>Profile views tripled in April (639 vs ~250 average). This is likely driven by a GBP post, update, or algorithm change — not necessarily sustained. <strong>Capitalize on this momentum</strong> by publishing 2 new GBP posts per week and ensuring all service categories are updated.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH CONSOLE -->
+<div id="tab-gsc" class="tab-pane">
+  <div class="section-title">Google Search Console</div>
+  <div class="section-sub">pipersdrainrepair.com · Organic search performance · Launching site Jan–Apr 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi-card green"><div class="kpi-label">Total Clicks</div><div class="kpi-value">135</div><div class="kpi-delta up">↑ Growing monthly</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Impressions</div><div class="kpi-value">73,001</div><div class="kpi-delta up">↑ 250% growth</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Avg. CTR</div><div class="kpi-value">0.19%</div><div class="kpi-delta down">↓ Very low</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Avg. Position</div><div class="kpi-value">34.3</div><div class="kpi-delta down">↓ Mostly page 4</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><div class="card-title">📈 Clicks &amp; Impressions Growth</div><div class="chart-wrap"><canvas id="gscTrendChart"></canvas></div></div>
+    <div class="card"><div class="card-title">📉 Average Position Trend</div><div class="chart-wrap"><canvas id="gscPositionChart"></canvas></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📅 Monthly GSC Performance</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Avg Position</th></tr></thead>
+      <tbody>
+        <tr><td>Oct 2025</td><td>0</td><td>0</td><td>—</td><td>—</td></tr>
+        <tr><td>Nov 2025</td><td>0</td><td>0</td><td>—</td><td>—</td></tr>
+        <tr><td>Dec 2025</td><td>7</td><td>1,618</td><td class="ctr-bad">0.43%</td><td>40.9</td></tr>
+        <tr><td><strong>Jan 2026</strong></td><td><strong>29</strong></td><td><strong>8,007</strong></td><td class="ctr-bad"><strong>0.36%</strong></td><td class="rank-bad"><strong>37.7</strong></td></tr>
+        <tr><td><strong>Feb 2026</strong></td><td><strong>45</strong></td><td><strong>14,623</strong></td><td class="ctr-bad"><strong>0.31%</strong></td><td class="rank-bad"><strong>39.2</strong></td></tr>
+        <tr><td><strong>Mar 2026</strong></td><td><strong>29</strong></td><td><strong>22,348</strong></td><td class="ctr-bad"><strong>0.13%</strong></td><td class="rank-bad"><strong>27.6</strong></td></tr>
+        <tr><td><strong>Apr 2026</strong></td><td><strong>32</strong></td><td><strong>28,023</strong></td><td class="ctr-bad"><strong>0.11%</strong></td><td class="rank-bad"><strong>32.9</strong></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔑 Top Keywords (Jan–Apr 2026)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Keyword</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Avg Position</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>pipers drain repair</td><td>41</td><td>623</td><td class="ctr-good">6.6%</td><td>2.0</td><td><span class="badge badge-blue">Brand</span></td></tr>
+        <tr><td>pipers plumbing</td><td>6</td><td>265</td><td class="ctr-warn">2.3%</td><td>10.3</td><td><span class="badge badge-blue">Brand</span></td></tr>
+        <tr><td>pipers drain repair llc</td><td>2</td><td>13</td><td class="ctr-good">15.4%</td><td>1.8</td><td><span class="badge badge-blue">Brand</span></td></tr>
+        <tr><td>grease trap cleaning</td><td>1</td><td>22</td><td class="ctr-good">4.6%</td><td>10.6</td><td><span class="badge badge-green">Service</span></td></tr>
+        <tr><td>24 hour plumber fremont wa</td><td>0</td><td>6</td><td class="ctr-bad">0%</td><td>8.3</td><td><span class="badge badge-orange">⚡ Near pg 1</span></td></tr>
+        <tr><td>24 hour plumber greenwood wa</td><td>0</td><td>4</td><td class="ctr-bad">0%</td><td>9.8</td><td><span class="badge badge-orange">⚡ Near pg 1</span></td></tr>
+        <tr><td>24 hour drain cleaning service near me</td><td>0</td><td>18</td><td class="ctr-bad">0%</td><td>22.2</td><td><span class="badge badge-orange">Opportunity</span></td></tr>
+        <tr><td>24 hour plumber queen anne wa</td><td>0</td><td>1</td><td class="ctr-bad">0%</td><td>12.0</td><td><span class="badge badge-orange">Near pg 1</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📄 All Pages by GSC Performance (Oct 2025–Apr 2026)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Page</th><th>Impressions</th><th>Avg Position</th><th>Clicks</th><th>CTR</th></tr></thead>
+      <tbody>
+        <tr><td>/ (Homepage)</td><td>16,854</td><td class="rank-bad">31.1</td><td>114</td><td class="ctr-warn">0.68%</td></tr>
+        <tr><td>/plumbing/sump-pump-repair/ <span class="badge badge-red">⚡ CRITICAL</span></td><td>7,558</td><td class="rank-bad">42.1</td><td>1</td><td class="ctr-bad">0.01%</td></tr>
+        <tr><td>/areas-we-serve/bellevue-wa/</td><td>7,081</td><td class="rank-bad">36.6</td><td>5</td><td class="ctr-bad">0.07%</td></tr>
+        <tr><td>/plumbing/pipe-repair/</td><td>4,121</td><td class="rank-bad">35.8</td><td>1</td><td class="ctr-bad">0.02%</td></tr>
+        <tr><td>/plumbing/garbage-disposal-repair/</td><td>4,012</td><td class="rank-warn">29.2</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/sewer-and-drain/grease-trap-cleaning/ <span class="badge badge-orange">⚡ NEAR pg 2</span></td><td>3,550</td><td class="rank-warn">19.5</td><td>2</td><td class="ctr-bad">0.06%</td></tr>
+        <tr><td>/plumbing/faucet-repair-and-installation/</td><td>3,473</td><td class="rank-warn">28.2</td><td>1</td><td class="ctr-bad">0.03%</td></tr>
+        <tr><td>/trenchless/pipe-bursting/</td><td>3,403</td><td class="rank-bad">40.1</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/areas-we-serve/ (hub)</td><td>2,723</td><td class="rank-warn">18.0</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/sewer-and-drain/sewer-camera-inspection/</td><td>2,655</td><td class="rank-bad">47.6</td><td>1</td><td class="ctr-bad">0.04%</td></tr>
+        <tr><td>/plumbing/toilet-repair-and-replacement/</td><td>2,591</td><td class="rank-bad">35.1</td><td>1</td><td class="ctr-bad">0.04%</td></tr>
+        <tr><td>/trenchless/sewer-repair/</td><td>2,510</td><td class="rank-bad">41.8</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/trenchless/sewer-pipe-lining/</td><td>2,473</td><td class="rank-bad">42.5</td><td>3</td><td class="ctr-bad">0.12%</td></tr>
+        <tr><td>/plumbing/water-heater-replacement/</td><td>2,472</td><td class="rank-bad">40.6</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/sewer-and-drain/ (hub)</td><td>2,242</td><td class="rank-warn">16.6</td><td>1</td><td class="ctr-bad">0.04%</td></tr>
+        <tr><td>/plumbing/septic-tank-cleaning/</td><td>1,932</td><td class="rank-warn">24.7</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/trenchless/water-line-repair/</td><td>1,835</td><td class="rank-warn">29.7</td><td>2</td><td class="ctr-bad">0.11%</td></tr>
+        <tr><td>/trenchless/ (hub)</td><td>1,658</td><td class="rank-warn">23.4</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/contact/</td><td>1,638</td><td class="rank-warn">13.9</td><td>2</td><td class="ctr-bad">0.12%</td></tr>
+        <tr><td>/sewer-and-drain/hydro-jetting/</td><td>1,597</td><td class="rank-bad">35.1</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/areas-we-serve/ballard-wa/ <span class="badge badge-orange">Near pg 1</span></td><td>989</td><td class="rank-warn">12.2</td><td>0</td><td class="ctr-bad">0.00%</td></tr>
+        <tr><td>/blog/why-is-my-faucet-making-noise/</td><td>1,380</td><td class="rank-good">8.4</td><td>3</td><td class="ctr-warn">0.22%</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><div class="card-title">📱 Device Breakdown</div><div class="chart-wrap" style="height:200px"><canvas id="gscDeviceChart"></canvas></div></div>
+    <div class="card"><div class="card-title">🌍 Key GSC Insights</div>
+      <div class="insight-box red" style="margin-bottom:10px">
+        <div class="insight-title">🚨 Brand = 73% of All Clicks</div>
+        <p>"pipers drain repair" + variants = 49 of 135 clicks (36%). Including brand-influenced queries, ~73% of clicks are from people already looking for the business. The site is not yet generating significant non-brand organic traffic.</p>
+      </div>
+      <div class="insight-box orange">
+        <div class="insight-title">⚠️ 24-Hour Keywords Appearing</div>
+        <p>Multiple "24 hour plumber [neighborhood] wa" queries ranking positions 8–14 with zero clicks. These high-intent emergency queries need dedicated landing pages or a 24/7 service page to capture this traffic.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CORE UPDATE AUDIT -->
+<div id="tab-coreupdate" class="tab-pane">
+  <div class="section-title">Core Update Audit — E-E-A-T Assessment</div>
+  <div class="section-sub">Google Quality Evaluator Guidelines · Helpful Content Assessment · pipersdrainrepair.com</div>
+  <div class="eeat-grid">
+    <div class="eeat-card"><div class="eeat-letter">Experience (E)</div><div class="eeat-grade grade-c">C</div><div class="eeat-note">Limited photos on service pages. No before/after job photos. No personal job stories or case studies.</div></div>
+    <div class="eeat-card"><div class="eeat-letter">Expertise (E)</div><div class="eeat-grade grade-c">C+</div><div class="eeat-note">Services listed but no technician profiles, no certifications displayed, no license numbers visible.</div></div>
+    <div class="eeat-card"><div class="eeat-letter">Authoritativeness (A)</div><div class="eeat-grade grade-d">D</div><div class="eeat-note">New site with minimal backlinks. No media mentions. No industry certifications or awards displayed.</div></div>
+    <div class="eeat-card"><div class="eeat-letter">Trustworthiness (T)</div><div class="eeat-grade grade-c">C</div><div class="eeat-note">HTTPS present, contact page exists. Missing: license numbers, insurance docs, BBB/Angi badges, reviews on site.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">✅ Compliance Checklist</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>HTTPS / SSL certificate</td><td><span class="checklist-pass">✓ PASS</span></td><td>Secure site</td></tr>
+        <tr><td>Contact page with phone &amp; address</td><td><span class="checklist-pass">✓ PASS</span></td><td>Contact page present</td></tr>
+        <tr><td>Service pages exist</td><td><span class="checklist-pass">✓ PASS</span></td><td>Sewer, plumbing, trenchless, drain pages</td></tr>
+        <tr><td>Service area pages exist</td><td><span class="checklist-pass">✓ PASS</span></td><td>Bellevue, Ballard, Fremont, etc.</td></tr>
+        <tr><td>Blog content present</td><td><span class="checklist-pass">✓ PASS</span></td><td>Faucet noise blog ranking pos 8.4</td></tr>
+        <tr><td>GBP listing active</td><td><span class="checklist-pass">✓ PASS</span></td><td>Kent &amp; Maple Valley both active</td></tr>
+        <tr><td>Mobile-responsive site</td><td><span class="checklist-pass">✓ PASS</span></td><td>51.6% mobile sessions confirm usability</td></tr>
+        <tr><td>Schema markup on homepage</td><td><span class="checklist-warn">! WARN</span></td><td>Verify LocalBusiness schema is properly implemented</td></tr>
+        <tr><td>FAQPage schema on service pages</td><td><span class="checklist-fail">✗ FAIL</span></td><td>No FAQ sections or schema on any service pages</td></tr>
+        <tr><td>Service schema on service pages</td><td><span class="checklist-fail">✗ FAIL</span></td><td>No Service structured data markup found</td></tr>
+        <tr><td>WA State contractor license displayed</td><td><span class="checklist-fail">✗ FAIL</span></td><td>License number not visible on site — required for EEAT trust</td></tr>
+        <tr><td>Author attribution on blog posts</td><td><span class="checklist-fail">✗ FAIL</span></td><td>Blog posts lack author bylines and credentials</td></tr>
+        <tr><td>Reviews displayed on website</td><td><span class="checklist-fail">✗ FAIL</span></td><td>No customer reviews or testimonials on any page</td></tr>
+        <tr><td>AggregateRating schema</td><td><span class="checklist-fail">✗ FAIL</span></td><td>Google Reviews not marked up in schema</td></tr>
+        <tr><td>Technician bio / team page</td><td><span class="checklist-fail">✗ FAIL</span></td><td>No About-Us team profiles with credentials</td></tr>
+        <tr><td>Insurance / bonding documentation</td><td><span class="checklist-fail">✗ FAIL</span></td><td>No visible proof of insurance on site</td></tr>
+        <tr><td>LSA (Google Guaranteed) badge</td><td><span class="checklist-fail">✗ FAIL</span></td><td>Not enrolled — major trust &amp; visibility signal missing</td></tr>
+        <tr><td>Citation building (Yelp, Angi, etc.)</td><td><span class="checklist-warn">! WARN</span></td><td>Verify consistent NAP across all directories</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-box red">
+      <div class="insight-title">🚨 New Site EEAT Risk</div>
+      <p>As a newer website (<strong>GSC data starts Dec 2025</strong>), Google hasn't yet established trust signals for this domain. The lack of license numbers, reviews, author bios, and schema markup means Google's quality raters would score this site poorly. Every EEAT fix below improves both rankings and conversion rate.</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ No FAQPage Schema — Missing AI Overview</div>
+      <p>None of the service pages have FAQ sections or FAQPage schema. In 2025–2026, FAQ schema is required for <strong>AI Overview appearances and People Also Ask</strong> boxes. Adding FAQ schema to all 15+ service pages is a single-week task that could significantly boost CTR.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 WA State License is Non-Negotiable</div>
+      <p>Washington State requires contractor license numbers displayed on all marketing materials. Displaying the WA license number prominently in the footer and on service pages is both <strong>legally required and a strong EEAT trust signal</strong> that Google uses to verify business legitimacy.</p>
+    </div>
+    <div class="insight-box green">
+      <div class="insight-title">✅ Blog Is Working — Faucet Post at Pos 8.4</div>
+      <p>The faucet noise blog ranks at <strong>position 8.4 with 3 clicks</strong> — strong for a new site. This proves the content strategy is working. Publishing 4–6 blog posts per month using the content calendar below will compound organic growth month over month.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🎯 E-E-A-T Action Plan</div>
+    <div class="action-grid">
+      <div class="action-box"><div class="priority">Priority 1 — THIS WEEK</div><h4>Add WA State Contractor License Number</h4><p>Add license number to footer, About page, and all service pages. Both legally required and a direct Google trust signal. Verify license at Washington State Department of Labor and Industries.</p></div>
+      <div class="action-box"><div class="priority">Priority 2 — THIS WEEK</div><h4>Add Customer Reviews to Website</h4><p>Embed Google Reviews widget or add 5–10 written testimonials with customer names and neighborhoods (Kent, Maple Valley, Bellevue). AggregateRating schema unlocks star ratings in Google search results.</p></div>
+      <div class="action-box"><div class="priority">Priority 3 — WEEK 2</div><h4>Implement FAQPage Schema Site-Wide</h4><p>Add 4–5 FAQ questions to every service page with JSON-LD FAQPage schema. Target "how much does [service] cost in Kent WA?" — these appear in AI Overviews and People Also Ask.</p></div>
+      <div class="action-box"><div class="priority">Priority 4 — WEEK 2</div><h4>Create Owner/Technician Bio Page</h4><p>Add About Us page with owner name, years of experience, WA certifications, photo, and personal story. Link all blog posts to author profile. This is the single fastest EEAT grade improvement.</p></div>
+      <div class="action-box"><div class="priority">Priority 5 — MONTH 2</div><h4>Apply for LSA / Google Guaranteed</h4><p>Google Guaranteed badge appears above organic results. For a plumbing/drain company in King County, LSA typically generates a 25–40% call volume increase. WA contractor license required to enroll.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- GA4 -->
+<div id="tab-ga4" class="tab-pane">
+  <div class="section-title">GA4 Analytics</div>
+  <div class="section-sub">Google Analytics 4 · Property 515973173 · Jan–Apr 2026</div>
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-label">Total Sessions</div><div class="kpi-value">805</div><div class="kpi-delta neutral">Jan–Apr 2026</div></div>
+    <div class="kpi-card"><div class="kpi-label">Total Users</div><div class="kpi-value">578</div><div class="kpi-delta neutral">562 new users</div></div>
+    <div class="kpi-card red"><div class="kpi-label">Engagement Rate</div><div class="kpi-value">17.4%</div><div class="kpi-delta down">↓ Critical (avg 60%+)</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Bounce Rate</div><div class="kpi-value">82.6%</div><div class="kpi-delta down">↓ Very high</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Phone Calls</div><div class="kpi-value">35</div><div class="kpi-delta neutral">GA4 tracked</div></div>
+    <div class="kpi-card"><div class="kpi-label">Form Submits</div><div class="kpi-value">9</div><div class="kpi-delta neutral">+ 7 thank-you</div></div>
+    <div class="kpi-card"><div class="kpi-label">Page Views</div><div class="kpi-value">1,147</div><div class="kpi-delta neutral">1.42 pages/session</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">Paid Search</div><div class="kpi-value">202</div><div class="kpi-delta down">25% of sessions</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><div class="card-title">📈 Monthly Sessions</div><div class="chart-wrap"><canvas id="ga4SessionsChart"></canvas></div></div>
+    <div class="card"><div class="card-title">📊 Traffic by Channel</div><div class="chart-wrap"><canvas id="ga4ChannelsChart"></canvas></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📅 Monthly GA4 Performance</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Sessions</th><th>Users</th><th>Engaged Sessions</th><th>Engagement Rate</th><th>Avg Duration</th></tr></thead>
+      <tbody>
+        <tr><td>Jan 2026</td><td>118</td><td>83</td><td>24</td><td class="ctr-warn">20.3%</td><td>3:40</td></tr>
+        <tr><td>Feb 2026</td><td>128</td><td>80</td><td>30</td><td class="ctr-warn">23.4%</td><td>6:52</td></tr>
+        <tr><td>Mar 2026</td><td>165</td><td>127</td><td>21</td><td class="ctr-bad">12.7%</td><td>2:02</td></tr>
+        <tr><td>Apr 2026</td><td>394</td><td>305</td><td>65</td><td class="ctr-bad">16.5%</td><td>0:54</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="insight-grid">
+    <div class="insight-box red">
+      <div class="insight-title">🚨 April: 394 Sessions, Only 16.5% Engagement</div>
+      <p>Sessions nearly tripled in April but <strong>engagement rate dropped to 16.5% with avg session duration of 54 seconds</strong>. This is classic paid traffic quality failure: ads are spending budget on clicks from users who immediately bounce. Audit ad targeting — likely too broad (targeting all of Seattle vs Kent/Maple Valley specifically).</p>
+    </div>
+    <div class="insight-box orange">
+      <div class="insight-title">⚠️ Direct Traffic = 38.9% of Sessions</div>
+      <p>313 direct sessions suggests strong word-of-mouth and repeat visitors — a positive signal for a new business. However, <strong>25% paid search with near-zero conversions</strong> indicates ad spend is not converting. Verify conversion tracking is working correctly and review ad landing page quality.</p>
+    </div>
+    <div class="insight-box green">
+      <div class="insight-title">✅ February = Best Engagement Month</div>
+      <p>February had the <strong>highest engagement rate (23.4%) and longest sessions (6:52)</strong> with 128 sessions — the "best quality" month despite not being the highest volume. Study what drove February traffic (organic? referrals?) and replicate it.</p>
+    </div>
+    <div class="insight-box blue">
+      <div class="insight-title">💡 Only 9 Form Submits in 4 Months</div>
+      <p>With 805 sessions, the site should be generating 30–50 form submissions (4–6% conversion rate is industry standard). At 9 form submits, the CTA on service pages needs work: add visible phone numbers on every page, sticky header CTA, and simplify the contact form to 3 fields max.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT AUDIT -->
+<div id="tab-content" class="tab-pane">
+  <div class="section-title">Content Audit — All Pages</div>
+  <div class="section-sub">42 pages with GSC data analyzed · Oct 2025–Apr 2026</div>
+  <div class="insight-box red" style="margin-bottom:20px">
+    <div class="insight-title">🚨 Site-Wide Pattern: Thin Content Limiting Rankings</div>
+    <p>Most service and location pages rank between positions 20–48, generating significant impressions but almost no clicks. The <strong>sump pump repair page alone has 7,558 impressions with 1 click at position 42</strong>. The root cause is thin, template-style content with no local Seattle/King County context, no cost transparency, and no FAQ sections. Every service page needs 700+ words of unique, location-specific content to break into the top 10.</p>
+  </div>
+  <div class="kpi-grid" style="margin-bottom:20px">
+    <div class="kpi-card red"><div class="kpi-label">Critical (fix now)</div><div class="kpi-value">6</div><div class="kpi-delta down">3K+ impr, pos >35</div></div>
+    <div class="kpi-card orange"><div class="kpi-label">High Priority</div><div class="kpi-value">12</div><div class="kpi-delta down">1K+ impr, pos >20</div></div>
+    <div class="kpi-card"><div class="kpi-label">Monitor</div><div class="kpi-value">8</div><div class="kpi-delta neutral">Near page 1–2</div></div>
+    <div class="kpi-card green"><div class="kpi-label">Performing</div><div class="kpi-value">4</div><div class="kpi-delta up">Pos ≤15 with clicks</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px;padding:14px 18px">
+    <div class="card-title" style="margin-bottom:10px">🔍 Filter Pages</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="filterPp('ALL')" class="filter-btn active" data-pfilter="ALL">All Pages</button>
+      <button onclick="filterPp('CRITICAL')" class="filter-btn" data-pfilter="CRITICAL" style="background:#FADBD8;color:#A93226">🔴 Critical</button>
+      <button onclick="filterPp('HIGH')" class="filter-btn" data-pfilter="HIGH" style="background:#FDEBD0;color:#D35400">🟠 High</button>
+      <button onclick="filterPp('MEDIUM')" class="filter-btn" data-pfilter="MEDIUM" style="background:#EAECEE;color:#5D6D7E">🟡 Medium</button>
+      <button onclick="filterPp('MONITOR')" class="filter-btn" data-pfilter="MONITOR" style="background:#D6EAF8;color:#1A5276">👁 Monitor</button>
+      <button onclick="filterPp('GOOD')" class="filter-btn" data-pfilter="GOOD" style="background:#D4EFDF;color:#1E7E4A">✅ Good</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">📋 Page-by-Page Audit & Recommendations</div>
+    <div class="tbl-wrap"><table id="pp-table">
+      <thead><tr><th style="width:90px">Priority</th><th>Page</th><th style="width:90px;text-align:right">Impressions</th><th style="width:70px;text-align:right">Position</th><th style="width:55px;text-align:right">Clicks</th><th style="width:60px;text-align:right">CTR</th><th>Recommendation</th></tr></thead>
+      <tbody id="pp-tbody">
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/</td><td style="text-align:right">16,854</td><td class="rank-bad" style="text-align:right">31.1</td><td style="text-align:right">114</td><td class="ctr-warn" style="text-align:right">0.68%</td><td style="font-size:11.5px">Strengthen homepage with city-specific keywords (Kent WA, Maple Valley WA), add FAQ schema, improve title tag CTR</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/plumbing/sump-pump-repair/</td><td style="text-align:right">7,558</td><td class="rank-bad" style="text-align:right">42.1</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.01%</td><td style="font-size:11.5px">Expand to 800+ words: types, repair vs replace guide, cost $200–$800, battery backup, FAQ schema</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/bellevue-wa/</td><td style="text-align:right">7,081</td><td class="rank-bad" style="text-align:right">36.6</td><td style="text-align:right">5</td><td class="ctr-bad" style="text-align:right">0.07%</td><td style="font-size:11.5px">Expand Bellevue service area: neighborhoods, local plumbing context, 600+ unique words, FAQ schema</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/plumbing/pipe-repair/</td><td style="text-align:right">4,121</td><td class="rank-bad" style="text-align:right">35.8</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.02%</td><td style="font-size:11.5px">Add pipe materials guide, repair vs replace, trenchless options, cost guide, FAQ schema</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/plumbing/garbage-disposal-repair/</td><td style="text-align:right">4,012</td><td class="rank-warn" style="text-align:right">29.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add brand comparison, repair vs replace guide ($150–$400), Seattle city code note</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/grease-trap-cleaning/</td><td style="text-align:right">3,550</td><td class="rank-warn" style="text-align:right">19.5</td><td style="text-align:right">2</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Near page 2! Add restaurant cleaning frequency, King County health code, commercial angle, FAQ schema</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/plumbing/faucet-repair-and-installation/</td><td style="text-align:right">3,473</td><td class="rank-warn" style="text-align:right">28.2</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.03%</td><td style="font-size:11.5px">Add brand guide, repair vs replace, installation cost, Seattle area common brands</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/trenchless/pipe-bursting/</td><td style="text-align:right">3,403</td><td class="rank-bad" style="text-align:right">40.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Explain pipe bursting vs CIPP, cost, eligible pipe types, Washington state examples</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/</td><td style="text-align:right">2,723</td><td class="rank-warn" style="text-align:right">18.0</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Areas We Serve content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/sewer-camera-inspection/</td><td style="text-align:right">2,655</td><td class="rank-bad" style="text-align:right">47.6</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Completely rewrite — pos 47.6 (page 5). Add cost $200–$350, process, Seattle area pre-purchase angle</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/plumbing/toilet-repair-and-replacement/</td><td style="text-align:right">2,591</td><td class="rank-bad" style="text-align:right">35.1</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Add 700+ words unique content, FAQ schema, title tag optimization, internal links</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/trenchless/sewer-repair/</td><td style="text-align:right">2,510</td><td class="rank-bad" style="text-align:right">41.8</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add repair vs replace guide, trenchless vs excavation, King County permit info, cost guide</td></tr>
+<tr><td><span class="badge badge-red">CRITICAL</span></td><td style="font-size:12px;word-break:break-all">/trenchless/sewer-pipe-lining/</td><td style="text-align:right">2,473</td><td class="rank-bad" style="text-align:right">42.5</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.12%</td><td style="font-size:11.5px">Add CIPP process, eligible pipes, cost $80–$200/ft, no-dig benefit, Seattle clay soil context</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/plumbing/water-heater-replacement/</td><td style="text-align:right">2,472</td><td class="rank-bad" style="text-align:right">40.6</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add tankless vs traditional, Seattle rebates (Puget Sound Energy), cost guide, FAQ schema</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/</td><td style="text-align:right">2,242</td><td class="rank-warn" style="text-align:right">16.6</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.04%</td><td style="font-size:11.5px">Add 700+ words unique content, FAQ schema, title tag optimization, internal links</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/plumbing/septic-tank-cleaning/</td><td style="text-align:right">1,932</td><td class="rank-warn" style="text-align:right">24.7</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add King County septic regulations, cleaning frequency, cost $300–$600, FAQ schema</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/trenchless/water-line-repair/</td><td style="text-align:right">1,835</td><td class="rank-warn" style="text-align:right">29.7</td><td style="text-align:right">2</td><td class="ctr-warn" style="text-align:right">0.11%</td><td style="font-size:11.5px">Add 700+ words unique content, FAQ schema, title tag optimization, internal links</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/trenchless/</td><td style="text-align:right">1,658</td><td class="rank-warn" style="text-align:right">23.4</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add 700+ words unique content, FAQ schema, title tag optimization, internal links</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/contact/</td><td style="text-align:right">1,638</td><td class="rank-good" style="text-align:right">13.9</td><td style="text-align:right">2</td><td class="ctr-warn" style="text-align:right">0.12%</td><td style="font-size:11.5px">Good position. Add schema, ensure NAP consistent, add emergency call CTA</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/hydro-jetting/</td><td style="text-align:right">1,597</td><td class="rank-bad" style="text-align:right">35.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add cost guide $300–$600, commercial vs residential, restaurant grease removal, FAQ schema</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/plumbing/</td><td style="text-align:right">1,578</td><td class="rank-warn" style="text-align:right">18.5</td><td style="text-align:right">1</td><td class="ctr-bad" style="text-align:right">0.06%</td><td style="font-size:11.5px">Add 700+ words unique content, FAQ schema, title tag optimization, internal links</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/blog/why-is-my-faucet-making-that-noise-common-sounds-and-what-they-mean/</td><td style="text-align:right">1,380</td><td class="rank-good" style="text-align:right">8.4</td><td style="text-align:right">3</td><td class="ctr-warn" style="text-align:right">0.22%</td><td style="font-size:11.5px">Add brand guide, repair vs replace, installation cost, Seattle area common brands</td></tr>
+<tr><td><span class="badge badge-orange">HIGH</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/drain-cleaning/</td><td style="text-align:right">1,330</td><td class="rank-bad" style="text-align:right">31.5</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add drain types, snaking vs hydro jetting, emergency service, cost guide, FAQ schema</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/ballard-wa/</td><td style="text-align:right">989</td><td class="rank-good" style="text-align:right">12.2</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Ballard content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/fremont-wa/</td><td style="text-align:right">880</td><td class="rank-warn" style="text-align:right">23.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Fremont content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-green">GOOD</span></td><td style="font-size:12px;word-break:break-all">/about-us/</td><td style="text-align:right">845</td><td class="rank-good" style="text-align:right">8.9</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.12%</td><td style="font-size:11.5px">Add team bios, license numbers, years in business, WA state contractor license display</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/drain-cabling/</td><td style="text-align:right">482</td><td class="rank-warn" style="text-align:right">23.3</td><td style="text-align:right">1</td><td class="ctr-warn" style="text-align:right">0.21%</td><td style="font-size:11.5px">Clarify difference from snaking, when used, cost, cable vs hydro jetting comparison</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/greenwood-wa/</td><td style="text-align:right">450</td><td class="rank-warn" style="text-align:right">26.9</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Greenwood content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/magnolia-wa/</td><td style="text-align:right">379</td><td class="rank-warn" style="text-align:right">26.0</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Magnolia content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/</td><td style="text-align:right">336</td><td class="rank-good" style="text-align:right">10.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Strong position. Add FAQ schema, internal links to service pages, expand with more local context</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/sewer-and-drain/cast-iron-descaling/</td><td style="text-align:right">256</td><td class="rank-warn" style="text-align:right">18.1</td><td style="text-align:right">3</td><td class="ctr-good" style="text-align:right">1.17%</td><td style="font-size:11.5px">Already has some clicks — strengthen with case studies, before/after, Seattle older home context</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/phinney-ridge-wa/</td><td style="text-align:right">256</td><td class="rank-bad" style="text-align:right">46.9</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Phinney Ridge content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/crown-hill-wa/</td><td style="text-align:right">177</td><td class="rank-bad" style="text-align:right">38.8</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Crown Hill content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/how-placement-affects-water-heater-performance-and-lifespan/</td><td style="text-align:right">175</td><td class="rank-good" style="text-align:right">10.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add tankless vs traditional, Seattle rebates (Puget Sound Energy), cost guide, FAQ schema</td></tr>
+<tr><td><span class="badge badge-gray">LOW</span></td><td style="font-size:12px;word-break:break-all">/sitemap/</td><td style="text-align:right">38</td><td class="rank-warn" style="text-align:right">21.1</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Add 700+ words unique content, FAQ schema, title tag optimization, internal links</td></tr>
+<tr><td><span class="badge badge-gray">MEDIUM</span></td><td style="font-size:12px;word-break:break-all">/areas-we-serve/whittier-heights-wa/</td><td style="text-align:right">26</td><td class="rank-bad" style="text-align:right">39.3</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Expand Whittier Heights content: 600+ words, neighborhoods, local plumbing facts, unique service examples, FAQ schema</td></tr>
+<tr><td><span class="badge badge-blue">MONITOR</span></td><td style="font-size:12px;word-break:break-all">/blog/hosting-prep-getting-your-kitchen-drains-guest-ready/</td><td style="text-align:right">10</td><td class="rank-good" style="text-align:right">11.9</td><td style="text-align:right">0</td><td class="ctr-bad" style="text-align:right">0%</td><td style="font-size:11.5px">Strong position. Add FAQ schema, internal links to service pages, expand with more local context</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- Universal fixes -->
+  <div class="section-title" style="margin-top:28px">🔧 What Every Page Is Missing</div>
+  <div class="insight-grid">
+    <div class="insight-box red"><div class="insight-title">❌ #1: No Local Seattle/WA Context</div><p>Every page reads like it could be for any city. Add: King County permit requirements, Seattle-area building codes, common pipe types in Kent/Maple Valley homes, local landmarks, specific neighborhoods served. Google ranks pages that prove local knowledge.</p></div>
+    <div class="insight-box red"><div class="insight-title">❌ #2: No FAQ Sections or Schema</div><p>Zero FAQPage schema across the site. Every service page needs 4–5 questions targeting "How much does [service] cost in Kent WA?" These appear in AI Overviews, People Also Ask, and improve CTR by 15–25%.</p></div>
+    <div class="insight-box red"><div class="insight-title">❌ #3: No Cost Transparency</div><p>None of the service pages include pricing. High-intent users want cost ranges before calling. Add: "Sump pump repair in Kent WA typically costs $150–$600" to every page. Pages with cost information rank 2–3 positions higher on average.</p></div>
+    <div class="insight-box orange"><div class="insight-title">⚠️ #4: Thin Service Area Pages</div><p>Bellevue (7,081 impr), Ballard (989 impr), Fremont, Greenwood, Magnolia pages are nearly empty. Each needs 600+ words: neighborhood history, common home ages/pipe types, local drainage issues, specific services offered in that area.</p></div>
+    <div class="insight-box orange"><div class="insight-title">⚠️ #5: No Internal Link Structure</div><p>Service pages don't link to each other or to the blog. Hub pages (sewer-and-drain, trenchless, plumbing) need to properly link to all sub-pages. Every blog post should link to 2–3 relevant service pages.</p></div>
+    <div class="insight-box blue"><div class="insight-title">💡 #6: No Reviews or Trust Signals</div><p>No customer quotes, no star rating display, no review count on any page. Adding Google Review snippets to service pages with AggregateRating schema is a proven CTR improvement tactic for local service businesses.</p></div>
+  </div>
+</div>
+
+<!-- CONTENT CALENDAR -->
+<div id="tab-calendar" class="tab-pane">
+  <div class="section-title">Content Calendar — Jun–Nov 2026</div>
+  <div class="section-sub">Service page priorities + 8 blog posts/month backed by GSC data</div>
+  <div class="card">
+    <div class="card-title">📅 Service Page Fix Priority — Next 6 Months</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Month</th><th>Page to Fix/Create</th><th>Target Keywords</th><th>GSC Signal</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Jun 2026</td><td>/plumbing/sump-pump-repair/</td><td>sump pump repair Kent WA, sump pump repair cost</td><td>7,558 impr, pos 42.1</td><td>Full rewrite 800+ words + FAQ schema + cost guide</td></tr>
+        <tr><td>Jun 2026</td><td>/sewer-and-drain/grease-trap-cleaning/</td><td>grease trap cleaning, restaurant drain cleaning Seattle</td><td>3,550 impr, pos 19.5</td><td>Add commercial angle, King County health code, FAQ schema</td></tr>
+        <tr><td>Jun 2026</td><td>/areas-we-serve/bellevue-wa/</td><td>plumber Bellevue WA, drain repair Bellevue</td><td>7,081 impr, pos 36.6</td><td>Expand to 700+ words with Bellevue neighborhood context</td></tr>
+        <tr><td>Jul 2026</td><td>/plumbing/pipe-repair/</td><td>pipe repair Kent WA, pipe repair cost Seattle</td><td>4,121 impr, pos 35.8</td><td>Add pipe types, repair vs replace, trenchless option, cost guide</td></tr>
+        <tr><td>Jul 2026</td><td>/plumbing/garbage-disposal-repair/</td><td>garbage disposal repair Kent WA, disposal not working</td><td>4,012 impr, pos 29.2</td><td>Brand comparison, repair vs replace, cost guide, FAQ schema</td></tr>
+        <tr><td>Jul 2026</td><td>/areas-we-serve/ballard-wa/</td><td>plumber Ballard WA, 24 hour plumber Ballard</td><td>989 impr, pos 12.2</td><td>Optimize title tag CTR + expand content for page 1 push</td></tr>
+        <tr><td>Aug 2026</td><td>/sewer-and-drain/sewer-camera-inspection/</td><td>sewer camera inspection Kent WA, sewer scope</td><td>2,655 impr, pos 47.6</td><td>Complete rewrite — pos 47 means page 5. 800+ words + schema</td></tr>
+        <tr><td>Aug 2026</td><td>/trenchless/pipe-bursting/</td><td>pipe bursting Kent WA, trenchless pipe replacement</td><td>3,403 impr, pos 40.1</td><td>Explain method, vs CIPP, cost, King County context</td></tr>
+        <tr><td>Sep 2026</td><td>/trenchless/sewer-repair/</td><td>trenchless sewer repair Kent WA, no-dig sewer</td><td>2,510 impr, pos 41.8</td><td>Trenchless vs excavation comparison, cost guide, FAQ schema</td></tr>
+        <tr><td>Sep 2026</td><td>Create /areas-we-serve/kent-wa/</td><td>plumber Kent WA, drain repair Kent WA</td><td>Primary market — no page!</td><td>Create dedicated Kent WA service page — this is the primary market</td></tr>
+        <tr><td>Oct 2026</td><td>/trenchless/sewer-pipe-lining/</td><td>sewer pipe lining Kent WA, CIPP lining Seattle</td><td>2,473 impr, pos 42.5</td><td>CIPP process, eligible pipes, cost $80-$200/ft, FAQ schema</td></tr>
+        <tr><td>Nov 2026</td><td>Create /areas-we-serve/maple-valley-wa/</td><td>plumber Maple Valley WA, drain repair Maple Valley</td><td>GBP location — needs page!</td><td>Create dedicated Maple Valley page to support GBP rankings</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px">✍️ Monthly Blog Topics — Jun–Nov 2026 (8 Posts/Month)</div>
+  <div class="insight-box blue" style="margin-bottom:16px">
+    <div class="insight-title">💡 Blog Strategy: Target King County &amp; Seattle-Specific Searches</div>
+    <p>All blog topics are backed by GSC keyword data from the site or high-volume Seattle/King County search patterns. Priority goes to <strong>cost queries</strong> (highest conversion intent), <strong>"24 hour" emergency queries</strong> (appearing in GSC near page 1), and <strong>local plumbing context</strong> for Kent, Maple Valley, Bellevue, and surrounding neighborhoods. Target 1,200–1,600 words per post. Publish 2x/week.</p>
+  </div>
+
+  <!-- JUNE BLOGS -->
+  <div class="card">
+    <div class="card-title" style="background:var(--primary);color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 June 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>How Much Does Sump Pump Repair Cost in Kent &amp; Seattle WA? (2026)</strong></td><td>sump pump repair cost</td><td>1,400</td><td>Cost $150–$600, repair vs replace guide, types of sump pumps, King County flooding areas, FAQ schema</td></tr>
+        <tr><td>2</td><td><strong>Grease Trap Cleaning for King County Restaurants: What You Need to Know</strong></td><td>grease trap cleaning King County</td><td>1,200</td><td>Frequency requirements, King County health code, commercial plumbing contracts, cost guide</td></tr>
+        <tr><td>3</td><td><strong>How Much Does Sewer Camera Inspection Cost in Seattle? (2026)</strong></td><td>sewer camera inspection cost Seattle</td><td>1,400</td><td>Cost $200–$350, what it shows, pre-purchase angle for Seattle real estate, FAQ schema</td></tr>
+        <tr><td>4</td><td><strong>Trenchless vs Traditional Sewer Repair: Which Is Best for Seattle Homes?</strong></td><td>trenchless sewer repair Seattle</td><td>1,400</td><td>Comparison table, Seattle clay soil context, cost difference, when each method applies</td></tr>
+        <tr><td>5</td><td><strong>Signs You Need Emergency Drain Service in Kent, WA</strong></td><td>emergency drain service Kent WA</td><td>1,100</td><td>Emergency vs regular, 7 signs, what to do while waiting, 24-hour availability</td></tr>
+        <tr><td>6</td><td><strong>What Is Cast Iron Pipe Descaling? (And Why Seattle Homes Need It)</strong></td><td>cast iron pipe descaling Seattle</td><td>1,200</td><td>What it is, Seattle older home pipe context, when needed, cost, descaling vs replacement</td></tr>
+        <tr><td>7</td><td><strong>Hydro Jetting Cost in Seattle WA: What to Expect (2026)</strong></td><td>hydro jetting cost Seattle</td><td>1,300</td><td>$300–$600 residential, commercial higher, when vs snaking, restaurant grease, FAQ schema</td></tr>
+        <tr><td>8</td><td><strong>Does Homeowners Insurance Cover Sewer Repair in Washington State?</strong></td><td>homeowners insurance sewer repair Washington</td><td>1,200</td><td>WA state standard coverage, riders available, utility service line coverage, what to do if denied</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- JULY BLOGS -->
+  <div class="card">
+    <div class="card-title" style="background:#1565C0;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 July 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>9</td><td><strong>How Much Does Drain Cleaning Cost in Kent &amp; Bellevue WA? (2026)</strong></td><td>drain cleaning cost Kent WA</td><td>1,300</td><td>Cost by drain type, snaking vs hydro jetting, emergency premium, FAQ schema</td></tr>
+        <tr><td>10</td><td><strong>Pipe Bursting Explained: The No-Dig Sewer Replacement for Seattle Homes</strong></td><td>pipe bursting Seattle</td><td>1,200</td><td>How it works, vs CIPP, cost $60–$200/ft, clay soil in King County, eligibility guide</td></tr>
+        <tr><td>11</td><td><strong>Water Heater Replacement Cost in Seattle WA (2026 Full Guide)</strong></td><td>water heater replacement cost Seattle</td><td>1,500</td><td>Cost by type, Puget Sound Energy rebates, tankless vs traditional, installation cost</td></tr>
+        <tr><td>12</td><td><strong>7 Signs Your Sewer Line Needs Repair in Maple Valley, WA</strong></td><td>sewer line repair Maple Valley WA</td><td>1,200</td><td>7 symptoms, root intrusion angle (common in Maple Valley), trenchless options, FAQ</td></tr>
+        <tr><td>13</td><td><strong>Garbage Disposal Not Working? Repair vs Replace Guide for Seattle Homeowners</strong></td><td>garbage disposal repair Seattle</td><td>1,100</td><td>Repair signs, replace signs, cost $75–$400, brand recommendations, FAQ schema</td></tr>
+        <tr><td>14</td><td><strong>Sewer Pipe Lining (CIPP) for Seattle Older Homes: Complete Guide</strong></td><td>sewer pipe lining Seattle</td><td>1,400</td><td>CIPP process, Seattle homes built 1940–1980, clay pipe lifespan, cost guide</td></tr>
+        <tr><td>15</td><td><strong>How to Prevent Basement Flooding in Kent &amp; Maple Valley, WA</strong></td><td>prevent basement flooding Kent WA</td><td>1,200</td><td>King County high rainfall context, sump pump maintenance, drainage system, FAQ</td></tr>
+        <tr><td>16</td><td><strong>Faucet Repair vs Replacement: What Seattle Homeowners Should Know</strong></td><td>faucet repair Seattle</td><td>1,100</td><td>When to repair, when to replace, cost $75–$300, popular brands in Seattle, FAQ</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- AUGUST BLOGS -->
+  <div class="card">
+    <div class="card-title" style="background:#27AE60;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 August 2026 — 8 Blog Posts</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>17</td><td><strong>How Much Does Sewer Line Replacement Cost in Seattle? (2026)</strong></td><td>sewer line replacement cost Seattle</td><td>1,600</td><td>$3K–$15K range, trenchless vs excavation cost, permits in King County, financing</td></tr>
+        <tr><td>18</td><td><strong>Toilet Repair vs Replacement: A Guide for Kent &amp; Bellevue Homeowners</strong></td><td>toilet repair Kent WA</td><td>1,100</td><td>Repair signs, replace threshold, running toilet cost, installation guide, FAQ</td></tr>
+        <tr><td>19</td><td><strong>Water Line Repair Cost in King County WA (2026 Guide)</strong></td><td>water line repair cost King County</td><td>1,400</td><td>Cost by type, who owns the line in WA state, trenchless vs excavation, permits</td></tr>
+        <tr><td>20</td><td><strong>How Long Do Sewer Lines Last in Pacific Northwest Homes?</strong></td><td>sewer pipe lifespan Pacific Northwest</td><td>1,200</td><td>Lifespan by material, PNW clay soil impact, Seattle/King County older neighborhoods</td></tr>
+        <tr><td>21</td><td><strong>Septic Tank Cleaning in King County: Frequency, Cost &amp; Regulations</strong></td><td>septic tank cleaning King County WA</td><td>1,300</td><td>King County health requirements, frequency (3–5 yrs), cost $300–$600, signs it needs pumping</td></tr>
+        <tr><td>22</td><td><strong>How to Find a Hidden Water Leak in Your Seattle Home</strong></td><td>water leak detection Seattle</td><td>1,200</td><td>DIY meter test, professional acoustic detection, slab leaks in PNW homes, cost guide</td></tr>
+        <tr><td>23</td><td><strong>Commercial Drain Cleaning for Seattle Businesses: What Owners Need to Know</strong></td><td>commercial drain cleaning Seattle</td><td>1,200</td><td>Restaurant grease traps, frequency, King County regulations, maintenance contracts</td></tr>
+        <tr><td>24</td><td><strong>What Causes Sewer Line Damage in Pacific Northwest Homes?</strong></td><td>sewer line damage causes Seattle</td><td>1,200</td><td>Tree roots (common in Seattle), clay/sandy soil shifting, age of pipes in KCWA neighborhoods</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- SEPTEMBER BLOGS -->
+  <div class="card">
+    <div class="card-title" style="background:#8E44AD;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 September 2026 — 8 Blog Posts (Fall Prep)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>25</td><td><strong>Fall Plumbing Checklist for Seattle &amp; King County Homeowners</strong></td><td>fall plumbing checklist Seattle</td><td>1,300</td><td>12-point checklist, Seattle rainy season prep, sump pump test, drain clearing, FAQ</td></tr>
+        <tr><td>26</td><td><strong>Pipe Descaling: When Seattle Homeowners Need It &amp; What It Costs</strong></td><td>pipe descaling Seattle</td><td>1,200</td><td>What it is, scale buildup in PNW hard water areas, methods, cost $200–$800</td></tr>
+        <tr><td>27</td><td><strong>How to Choose the Best Drain Repair Company in King County WA</strong></td><td>best drain repair company King County</td><td>1,100</td><td>8 criteria, red flags, WA license verification, questions to ask</td></tr>
+        <tr><td>28</td><td><strong>Trenchless Water Line Replacement: Is It Right for Your Seattle Home?</strong></td><td>trenchless water line replacement Seattle</td><td>1,100</td><td>How it works, cost, no landscape damage, Seattle clay soil benefit</td></tr>
+        <tr><td>29</td><td><strong>24-Hour Emergency Plumber in Bellevue &amp; Kent WA: What to Expect</strong></td><td>24 hour plumber Bellevue WA</td><td>1,000</td><td>True emergencies, cost premium, response time, what to do first, FAQ</td></tr>
+        <tr><td>30</td><td><strong>Sewer Inspection Before Buying a Home in King County: Complete Guide</strong></td><td>sewer inspection before buying home Seattle</td><td>1,200</td><td>Why standard inspections miss sewer issues, cost, Seattle real estate context</td></tr>
+        <tr><td>31</td><td><strong>Drain Cabling vs Hydro Jetting: Which Seattle Homeowners Need</strong></td><td>drain cabling vs hydro jetting</td><td>1,200</td><td>When each method works, cost comparison, recurring clogs, commercial vs residential</td></tr>
+        <tr><td>32</td><td><strong>Plumbing Permits in King County WA: What Homeowners Need to Know</strong></td><td>plumbing permit King County WA</td><td>1,000</td><td>When permits required, Piper's handles all permits, county rules, cost &amp; timeline</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- OCTOBER BLOGS -->
+  <div class="card">
+    <div class="card-title" style="background:#E67E22;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 October 2026 — 8 Blog Posts (Rainy Season)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>33</td><td><strong>How to Prepare Your Plumbing for Seattle's Rainy Season</strong></td><td>Seattle rainy season plumbing</td><td>1,300</td><td>October–March rainfall prep, sump pump, drain clearing, sewer camera inspection</td></tr>
+        <tr><td>34</td><td><strong>Tree Root Sewer Damage in King County: Signs, Causes &amp; Fixes</strong></td><td>tree root sewer damage King County</td><td>1,200</td><td>Seattle trees most likely to invade (maple, cherry, cedar), CIPP fix, prevention</td></tr>
+        <tr><td>35</td><td><strong>5 Plumbing Problems Common in Older King County Homes</strong></td><td>plumbing problems older homes King County</td><td>1,300</td><td>Pre-1970 homes in Seattle/Kent/Bellevue: galvanized, clay pipes, orangeburg, outdated fixtures</td></tr>
+        <tr><td>36</td><td><strong>How to Increase Water Pressure in Your Seattle Home</strong></td><td>increase water pressure Seattle</td><td>1,100</td><td>Causes, PRV adjustment, pipe descaling, Seattle Water utility low pressure areas</td></tr>
+        <tr><td>37</td><td><strong>Sump Pump Replacement Guide for Kent &amp; Maple Valley WA Homeowners</strong></td><td>sump pump replacement cost Kent WA</td><td>1,300</td><td>Types, battery backup necessity in PNW, cost $400–$1,200, installation guide</td></tr>
+        <tr><td>38</td><td><strong>What Is a Sewer Scope Inspection? (Everything King County Buyers Should Know)</strong></td><td>sewer scope inspection King County</td><td>1,000</td><td>Same as camera inspection, real estate angle, what it finds, cost, how to request</td></tr>
+        <tr><td>39</td><td><strong>Tankless Water Heater for Seattle: Pros, Cons &amp; 2026 Cost Guide</strong></td><td>tankless water heater Seattle</td><td>1,300</td><td>Pros/cons, Puget Sound Energy rebates, installation cost, best for Seattle climate</td></tr>
+        <tr><td>40</td><td><strong>Why Drains Clog in Pacific Northwest Homes (And the Permanent Fix)</strong></td><td>drains keep clogging Seattle</td><td>1,100</td><td>5 causes specific to PNW: leaves, tree roots, grease, mineral buildup, FAQ</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- NOVEMBER BLOGS -->
+  <div class="card">
+    <div class="card-title" style="background:#C0392B;color:white;margin:-20px -20px 16px;padding:12px 20px;border-radius:10px 10px 0 0">📅 November 2026 — 8 Blog Posts (Holiday + Year-End)</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Title</th><th>Primary Keyword</th><th>Word Count</th><th>Key Content Points</th></tr></thead>
+      <tbody>
+        <tr><td>41</td><td><strong>Holiday Plumbing Tips for Seattle Homeowners: Prevent Black Friday Emergencies</strong></td><td>holiday plumbing tips Seattle</td><td>1,000</td><td>10 tips, why Thanksgiving spikes plumber calls, garbage disposal rules, FAQ</td></tr>
+        <tr><td>42</td><td><strong>Trenchless Sewer Repair Cost Guide for Seattle &amp; King County (2026)</strong></td><td>trenchless sewer repair cost Seattle</td><td>1,500</td><td>CIPP $80–$200/ft, pipe bursting, comparison table, King County permit costs</td></tr>
+        <tr><td>43</td><td><strong>2026 Year in Review: Top Drain &amp; Sewer Repairs in Kent &amp; Maple Valley WA</strong></td><td>drain repair Kent WA</td><td>1,200</td><td>Top 5 jobs from 2026, before/after photos, customer testimonials, lessons learned</td></tr>
+        <tr><td>44</td><td><strong>Whole-Home Repiping: When Kent &amp; Bellevue Homes Need New Pipes</strong></td><td>whole home repipe King County</td><td>1,400</td><td>Signs needed, cost $4K–$15K, copper vs PEX, WA state code, timeline</td></tr>
+        <tr><td>45</td><td><strong>What Is Drain Cabling and When Do You Need It in Seattle?</strong></td><td>drain cabling Seattle</td><td>1,000</td><td>What it is, vs hydro jetting, cost $100–$250, best use cases, FAQ</td></tr>
+        <tr><td>46</td><td><strong>Sewer Maintenance Guide for King County Homeowners</strong></td><td>sewer maintenance King County</td><td>1,400</td><td>Annual inspection schedule, what not to flush, Seattle tree planting near sewers, maintenance calendar</td></tr>
+        <tr><td>47</td><td><strong>How to Deal With a Flooded Basement in Seattle: Step-by-Step</strong></td><td>flooded basement Seattle</td><td>1,100</td><td>Immediate steps, sump pump failure response, King County rainfall context, prevention</td></tr>
+        <tr><td>48</td><td><strong>Pipe Repair Options for Seattle Homes: A 2026 Complete Guide</strong></td><td>pipe repair Seattle</td><td>1,400</td><td>All pipe repair methods compared, by pipe material, cost ranges, trenchless options</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- LOCAL SEO -->
+<div id="tab-local" class="tab-pane">
+  <div class="section-title">Local SEO</div>
+  <div class="section-sub">Citations, GBP optimization, and King County local authority building</div>
+  <div class="insight-grid">
+    <div class="insight-box red"><div class="insight-title">🚨 Maple Valley GBP — Emergency Action Needed</div><p>All rankings collapsed in April 2026. Immediate actions: <strong>solicit 5+ new reviews from Maple Valley customers</strong>, post 2 GBP posts per week specifically mentioning Maple Valley, add Q&amp;A entries targeting "plumber Maple Valley WA", verify the GBP category is "Plumber" (primary) + "Drainage Service" (secondary).</p></div>
+    <div class="insight-box orange"><div class="insight-title">⚠️ No Kent, WA Dedicated Service Page</div><p>The primary GBP location is Kent, WA but there is no /areas-we-serve/kent-wa/ page on the website. <strong>Create this page immediately</strong> — it's the primary market and needs a dedicated, well-optimized service area page to support GBP rankings.</p></div>
+    <div class="insight-box green"><div class="insight-title">✅ Kent GBP Rankings Are Strong</div><p>Kent shows <strong>#1 for Trenchless Sewer Lining, #2 for Sewer Repair</strong>. Protect these with: monthly photo uploads of real Kent jobs, service posts highlighting these keywords, and regular Q&amp;A responses mentioning the service + city.</p></div>
+    <div class="insight-box blue"><div class="insight-title">💡 Seattle Neighborhood Expansion</div><p>GSC shows ranking for Ballard, Fremont, Greenwood, Queen Anne, Magnolia — all Seattle neighborhoods. These represent a premium market with older homes needing sewer services. Build dedicated pages for each neighborhood and add them as GBP service areas.</p></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📌 Citation Building Priority — King County WA</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Directory</th><th>Priority</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>Google Business Profile (both locations)</td><td><span class="badge badge-red">CRITICAL</span></td><td>Primary ranking signal — verify all info, add photos weekly</td></tr>
+        <tr><td>Yelp</td><td><span class="badge badge-red">HIGH</span></td><td>High visibility in Seattle market, strong consumer trust</td></tr>
+        <tr><td>Angi (Angie's List)</td><td><span class="badge badge-red">HIGH</span></td><td>Plumbing-specific, verified reviews, lead generation</td></tr>
+        <tr><td>HomeAdvisor / Thumbtack</td><td><span class="badge badge-red">HIGH</span></td><td>King County homeowners search these first</td></tr>
+        <tr><td>BBB (Better Business Bureau)</td><td><span class="badge badge-orange">MEDIUM</span></td><td>Washington State BBB — trust signal for older Seattle homeowners</td></tr>
+        <tr><td>NextDoor Business</td><td><span class="badge badge-orange">MEDIUM</span></td><td>Kent &amp; Maple Valley neighborhoods — hyper-local trust</td></tr>
+        <tr><td>King County Business Directory</td><td><span class="badge badge-orange">MEDIUM</span></td><td>Local authority signal</td></tr>
+        <tr><td>Washington Contractor Registry</td><td><span class="badge badge-orange">MEDIUM</span></td><td>Verify business license is current and listed</td></tr>
+        <tr><td>Houzz / BuildZoom</td><td><span class="badge badge-gray">LOW</span></td><td>Home improvement audience in Seattle metro</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- PRIORITY ACTIONS -->
+<div id="tab-actions" class="tab-pane">
+  <div class="section-title">Priority Action Plan</div>
+  <div class="section-sub">Ranked by impact · Piper&#39;s Drain Repair · Summer 2026</div>
+  <div class="card">
+    <div class="card-title">🚀 Top 10 Priority Actions</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Action</th><th>Impact</th><th>Effort</th><th>Est. Gain</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Audit &amp; fix paid search campaigns — April had 394 sessions, 16.5% engagement, 54s avg duration</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-green">Low</span></td><td>Stop wasted ad spend</td><td>This week</td></tr>
+        <tr><td><strong>2</strong></td><td>Emergency Maple Valley GBP recovery — 5+ new reviews, 2 posts/week, Q&amp;A with "Maple Valley" keywords</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-green">Low</span></td><td>Rankings recovery</td><td>This week</td></tr>
+        <tr><td><strong>3</strong></td><td>Rewrite sump pump repair page (7,558 impr, pos 42.1) — 800+ words, cost guide, FAQ schema</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-orange">Medium</span></td><td>+50–120 clicks/mo</td><td>Week 1–2</td></tr>
+        <tr><td><strong>4</strong></td><td>Add WA State contractor license number to footer and all service pages</td><td><span class="badge badge-red">CRITICAL</span></td><td><span class="badge badge-green">Low</span></td><td>EEAT + trust</td><td>This week</td></tr>
+        <tr><td><strong>5</strong></td><td>Optimize grease trap cleaning page title + add commercial content + FAQ schema (pos 19.5)</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>+20–40 clicks/mo</td><td>Week 1</td></tr>
+        <tr><td><strong>6</strong></td><td>Create /areas-we-serve/kent-wa/ dedicated page — primary market has no service area page!</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-orange">Medium</span></td><td>Map pack boost</td><td>Week 2</td></tr>
+        <tr><td><strong>7</strong></td><td>Optimize Ballard WA page title for CTR (pos 12.2, 989 impr, 0 clicks)</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>+10–20 clicks/mo</td><td>Week 1</td></tr>
+        <tr><td><strong>8</strong></td><td>Implement FAQPage schema on all 15+ service pages</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>+15–25% CTR</td><td>Week 2</td></tr>
+        <tr><td><strong>9</strong></td><td>Add customer reviews / testimonials to homepage and service pages with AggregateRating schema</td><td><span class="badge badge-orange">HIGH</span></td><td><span class="badge badge-green">Low</span></td><td>Trust + CTR</td><td>Week 2</td></tr>
+        <tr><td><strong>10</strong></td><td>Apply for LSA / Google Guaranteed badge — requires WA contractor license verification</td><td><span class="badge badge-orange">MEDIUM</span></td><td><span class="badge badge-orange">Medium</span></td><td>+25–40% calls</td><td>30 days</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📆 90-Day Action Roadmap</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Timeline</th><th>Actions</th><th>Expected Outcome</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Week 1</strong></td><td>Fix paid search targeting · Maple Valley GBP recovery (reviews + posts) · Add WA license # · Ballard page title fix · Grease trap FAQ schema</td><td>Stop ad waste · GBP recovery starts · Trust signals added</td></tr>
+        <tr><td><strong>Week 2–3</strong></td><td>Sump pump repair rewrite · Create Kent WA service area page · FAQPage schema on all service pages · Add reviews to homepage</td><td>Top-impression page starts ranking · Kent page indexed</td></tr>
+        <tr><td><strong>Month 2</strong></td><td>Owner bio/team page · Bellevue WA page rewrite · LSA application · Pipe repair + garbage disposal page rewrites</td><td>EEAT improvement · More service pages moving to top 20</td></tr>
+        <tr><td><strong>Month 3</strong></td><td>Sewer camera inspection rewrite · Create Maple Valley WA page · Blog content: 8 posts launched · Citation building (Yelp, Angi, Thumbtack)</td><td>Sewer pages ranking · Maple Valley support · Blog traffic starts</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+function filterPp(prio) {
+  document.querySelectorAll('[data-pfilter]').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-pfilter="${prio}"]`).classList.add('active');
+  document.querySelectorAll('#pp-tbody tr').forEach(row => {
+    if (prio === 'ALL') { row.style.display=''; return; }
+    const badge = row.querySelector('.badge');
+    row.style.display = badge && badge.textContent.trim() === prio ? '' : 'none';
+  });
+}
+
+const BLUE='rgba(26,92,58,0.8)', ORANGE='rgba(245,166,35,0.8)', GREEN='rgba(39,174,96,0.8)', RED='rgba(192,57,43,0.8)', GRAY='rgba(107,122,110,0.7)';
+
+new Chart(document.getElementById('gbpPerfChart'), {
+  type:'bar', data:{
+    labels:['Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
+    datasets:[
+      {label:'Website Clicks',data:[38,26,20,14,23,19,34,25],backgroundColor:BLUE},
+      {label:'GBP Calls',data:[11,6,3,3,3,3,5,8],backgroundColor:ORANGE}
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false}
+});
+
+new Chart(document.getElementById('gscTrendChart'), {
+  type:'line', data:{
+    labels:['Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'],
+    datasets:[
+      {label:'Clicks',data:[7,29,45,29,32],borderColor:BLUE,backgroundColor:'rgba(26,92,58,0.1)',tension:0.3,fill:true,yAxisID:'y'},
+      {label:'Impressions/1000',data:[1.6,8.0,14.6,22.3,28.0],borderColor:ORANGE,borderDash:[5,5],tension:0.3,yAxisID:'y1'}
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false,scales:{y:{position:'left',title:{display:true,text:'Clicks'}},y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'Impressions (000s)'}}}}
+});
+
+new Chart(document.getElementById('gscPositionChart'), {
+  type:'line', data:{
+    labels:['Dec 25','Jan 26','Feb 26','Mar 26','Apr 26'],
+    datasets:[{label:'Avg Position',data:[40.9,37.7,39.2,27.6,32.9],borderColor:RED,backgroundColor:'rgba(192,57,43,0.08)',tension:0.3,fill:true,pointRadius:5}]
+  }, options:{responsive:true,maintainAspectRatio:false,scales:{y:{reverse:true,min:20,max:50,title:{display:true,text:'Position (lower = better)'}}}}
+});
+
+new Chart(document.getElementById('gscDeviceChart'), {
+  type:'doughnut', data:{
+    labels:['Desktop','Mobile','Tablet'],
+    datasets:[{data:[73,61,1],backgroundColor:[BLUE,ORANGE,GREEN]}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+});
+
+new Chart(document.getElementById('ga4SessionsChart'), {
+  type:'bar', data:{
+    labels:['Jan 2026','Feb 2026','Mar 2026','Apr 2026'],
+    datasets:[
+      {label:'Sessions',data:[118,128,165,394],backgroundColor:BLUE},
+      {label:'Engaged Sessions',data:[24,30,21,65],backgroundColor:GREEN}
+    ]
+  }, options:{responsive:true,maintainAspectRatio:false}
+});
+
+new Chart(document.getElementById('ga4ChannelsChart'), {
+  type:'doughnut', data:{
+    labels:['Direct','Paid Search','Organic','Unassigned','Social','Referral'],
+    datasets:[{data:[313,202,147,102,31,7],backgroundColor:[BLUE,ORANGE,GREEN,GRAY,'#9B59B6',RED]}]
+  }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+});
+</script>
+</body>
+</html>
